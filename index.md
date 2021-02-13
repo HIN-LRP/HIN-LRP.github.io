@@ -1,4 +1,4 @@
-## Introduction
+# Introduction
 ### What is a jet?!?!?
 [some content tbd]
 
@@ -7,14 +7,14 @@
 
 ----
 
-## Interaction Network
+# Interaction Network
 ### Traits of an IN
 [some content tbd]
 
 ### Pytorch Geometric and the Higgs Interaction Network
 
 ----
-## Layerwise Relevance Propagation
+# Layerwise Relevance Propagation
 [some content tbd]
 
 ### Conservation and the Epsilon Rule
@@ -25,6 +25,6 @@
 
 ----
 
-## The Higgs Jet: Relevance Visualized
+# The Higgs Jet: Relevance Visualized
 [some pictures]
 
