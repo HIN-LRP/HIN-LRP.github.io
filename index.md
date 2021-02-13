@@ -12,6 +12,7 @@
 [some content tbd]
 
 ### Pytorch Geometric and the Higgs Interaction Network
+[some content tbd]
 
 ----
 # Layerwise Relevance Propagation
