@@ -1,2 +1,4 @@
 title: "Understanding the Higgs Boson Interaction Network"
 theme: jekyll-theme-cayman
+source: .
+exclude: [_tutorial.md]
