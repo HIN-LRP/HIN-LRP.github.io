@@ -1,5 +1,5 @@
 title: "Understanding the Higgs Boson Interaction Network"
-# remote-theme: LeNPaul/Millennial
-theme: jekyll-theme-cayman
+jekyll-remote-theme: LeNPaul/Millennial
+# theme: jekyll-theme-cayman
 source: .
 exclude: [_tutorial.md]
