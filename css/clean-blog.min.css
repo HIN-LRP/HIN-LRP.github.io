@@ -9,3 +9,15 @@
     margin-left: auto;
     margin-right: auto;
   }
+
+
+.img-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+.img-column {
+    flex: 50%;
+    padding: 0;
+  }
