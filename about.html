@@ -52,14 +52,14 @@
                         <a href="index.html">Home</a>
                     </li>
                     <li>
-                        <a href="about.html">About</a>
+                        <a href="about.html">LRP</a>
                     </li>
-                    <li>
-                        <a href="post.html">Sample Post</a>
-                    </li>
-                    <li>
+                    <!-- <li> -->
+                        <!-- <a href="post.html">Sample Post</a> -->
+                    <!-- </li> -->
+                    <!-- <li>
                         <a href="contact.html">Contact</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -74,9 +74,9 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="page-heading">
-                        <h1>About Me</h1>
+                        <h1>LRP</h1>
                         <hr class="small">
-                        <span class="subheading">This is what I do.</span>
+                        <span class="subheading">Layerwise Relevance Propagation</span>
                     </div>
                 </div>
             </div>
@@ -87,9 +87,42 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe nostrum ullam eveniet pariatur voluptates odit, fuga atque ea nobis sit soluta odio, adipisci quas excepturi maxime quae totam ducimus consectetur?</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius praesentium recusandae illo eaque architecto error, repellendus iusto reprehenderit, doloribus, minus sunt. Numquam at quae voluptatum in officia voluptas voluptatibus, minus!</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum molestiae debitis nobis, quod sapiente qui voluptatum, placeat magni repudiandae accusantium fugit quas labore non rerum possimus, corrupti enim modi! Et.</p>
+                <h3>Intro</h3>
+                <p>The core concept behind the different LRP rules is the conservation property of relevance scores. By relevance scores, we are referring to a measurement of how a particular input or a part of that input is related to the output, which, in our case, is the prediction. We will define it properly later in this page.</p>
+            </div>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h3>Conservation Property</h3>
+                <p>The conservation property is very much similar to the conservation law in physics. The wikipedia page of the latter states:</p>
+                <blockquote>A particular measurable property of an isolated physical system does not change as the system evolves over time.</blockquote>
+                <p>The conservation of relevance is very much the same: each layer of the model can be considered as a closed system at different time; as relevance score propagates through a layer, the total amount of it stays the same.</p>
+                [img here]
+                <p>In our HIN, things can get a bit more complicated. Other models have a more straightforward layer by layer architecture like in the plot above, whereas the HIN re-propagates certain layers, particularly the input and the input source node transformation, reapplying those values in multiple instances across the block layers. In simple words, HIN picks up the input at multiple occasions, as shown in the example below
+                </p>
+                [img here]
+                <p>Remember the water and river analogy we made earlier? Like the flow of water in a river: the total amount is conserved as it flows through the forks. Just like all the forks of the river eventually reaches the sea, the relevance scores propagates through the diverging paths and all reaches the input in the end. Since the total amount of relevance score always stays constant, we could add up the relevance score attributed to the same entry of the input like the way water sums up in the sea.</p>
+                <p>Now that we have an idea of how LRP propagates relevance scores through each layer, we can take a closer look at what happens within each layer. 
+                </p>
+                [img here]
+                <p>Within the layers, the same idea still applies. Similar to relevance score propagating through the connection of consecutive layers. For neuron i in layer j,  it inherits a fraction of the relevance score from all neurons that it connects to in the consecutive layer k. The amount of relevance score neuron i obtains is decided by how much it has contributed to to those neurons that it connects to in layer k.</p>
+                [eq here]
+                <p>So how do we quantify neuron i’s contribution? It’s time to formally define what is the relevance score that we’ve been talking about.</p>
+                <h3>Relevance score</h3>
+                <p>Recall that we said the relevance score is meant to measure how much a particular part of the input has contributed to the output. So a natural way of quantifying it would be measuring how much change a particular input or a part of that input has induced on the output.</p>
+                <p>Consider the linear function below (some might recognize that this is in fact the definition of a linear layer in PyTorch):
+                </p>
+                [eq here]
+                <p>Here x,y, and b are vectors, and W is a matrix.
+                </p>
+                <p>From Calculus I, we’ve learned that the gradient of a function tells you the rate of change per unit input. Since instead of unit input, we are more interested in the amount of change brought by certain input, we take the product of the gradient and that input:
+                </p>
+                [eq here]
+                <p>Naturally, the fraction of contribution for the u’th entry of input x would be the amount of change by this entry over the total change
+                </p>
+                [eq here]
+                <p>
+                    Now that we have the fraction of contribution, we can substitute it back into the equation to get the basic distribution rule of LRP, known as the LRP-0 rule.
+                </p>
+                <p>In our project, we used a slightly more complicated distribution rule, the LRP-epsilon rule, for a better performance. </p>
             </div>
         </div>
     </div>
