@@ -136,6 +136,7 @@
                         The interconnectedness of this interaction block allows us to model the flow of information between nodes, or pairs of particles. PyTorch Geometric’s MetaLayer function abstracts a lot of this interconnectedness for us. Note how when the new edge hidden features are calculated, they influence the new node hidden features and global hidden features, and likewise when new node features are calculated, and so on.
                     </p>
 
+                    <img src="img/model_structure.svg" class='img-fluid'/>
                     <p>Each block is encoded with its respective transformation sequences: concatenations, linear transformations, batch normalizations, and ReLU activations. Our fully trained model will pass the input data through these blocks and return a softmaxed probability of how likely a jet is to be a Higgs boson signal.</p>
                     
                     <p>But most importantly here’s how it performs: Here's a lovely 99% ROC AUC.
@@ -174,6 +175,8 @@
                         So it’s kinda funny how this slight error in the construction of our sanity check actually exposed a deeper truth about the dummy data, which honestly just makes us more confident in the validity of the method.</p>
 
                     <h2 class="section-heading">Visualizing Relevance with HIN-LRP</h2>
+
+
                     <!-- <div style='display: inline-block; padding: 50px'>
                         <object data="html/b2_j334.html" height=650 width=300 ></object>
                         <img src='img/b2j334_3d.png' width=300 class="img-fluid"></img>
