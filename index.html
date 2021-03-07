@@ -136,12 +136,13 @@
                         The interconnectedness of this interaction block allows us to model the flow of information between nodes, or pairs of particles. PyTorch Geometric’s MetaLayer function abstracts a lot of this interconnectedness for us. Note how when the new edge hidden features are calculated, they influence the new node hidden features and global hidden features, and likewise when new node features are calculated, and so on.
                     </p>
 
-                    <img src="img/model_structure.svg" width=900 class='img-fluid'/>
+                    <img src="img/model_architecture.png" width=90% class='img-fluid'/>
                     <p>Each block is encoded with its respective transformation sequences: concatenations, linear transformations, batch normalizations, and ReLU activations. Our fully trained model will pass the input data through these blocks and return a softmaxed probability of how likely a jet is to be a Higgs boson signal.</p>
                     
                     <p>But most importantly here’s how it performs: Here's a lovely 99% ROC AUC.
                         Compared to a straightforward boosted decision tree, our interaction network AUC boundary is nearly a right angle, which is quite ideal!                        
                    </p>
+                   <img src="img/ROC.png" width=90% class='img-fluid'/>
                     <p>
                        So we have this model, with a pretty splendid accuracy. But we don’t automatically understand how or why the model comes to these conclusions. This is where LRP comes in:
                     </p>
@@ -154,21 +155,21 @@
 
                     <p>For our model, this means that LRP allows us to interpret model behavior on a jet by jet basis. Recall that the IN takes a jet as input, and outputs a Higgs boson likelihood for that jet. Here, we will reverse this process using LRP:  input the Higgs Boson likelihood, and in return we find out which particles, edges, even features of that jet input were most relevant.
                     </p>
-
+                    <img src="img/input_to_relevance.png" width=100% class='img-fluid'/>
                     <p>Now, you might have realized that LRP is very similar to a regular back-propagation of the model, except that it is propagating the relevance score. It operates on a gradient times input convention that refers to the Taylor expansion based calculation used to get relevancy at each layer.
 
                     </p>
-
+                    <img src="img/lrp.png" width=100% class='img-fluid'/>
                     <p>Look at this diagram. Follow the color density from the output as it moves backwards through the nodes. The more “relevant” nodes get more weight, and therefore color. For our model, this will allow us to highlight relevancy for both nodes, and edges.</p>
-
+                    <img src="img/eq5.png" width=100% class='img-fluid'/>
                     <p> Now for the equation we’re using to propagate relevance: The LRP-epsilon rule. The complicated math equation defined above is used at each layer to propagate relevance through the model. The rule is derived from the gradient times input concept, with the addition of one more element: The epsilon refers to a small quantity added to the denominator. With this, we avoid numerical instabilities, and also absorb some of the relevance score such that only the most important features are highlighted.</p>
-
+                    
                     <h4>Dummy Model</h4>
 
                     <p>
                         We made fake data, and labeled it using an equation such that the only important features were 0 and 3. Everything else is useless noise.
                     </p>
-
+                    <img src="img/sc.png" width=100% class='img-fluid'/>
                     <p>How do we read this map? The relevance scores are visualized in this heatmap, which has the same dimensions as the input. Each cell in the heatmap corresponds to an entry in the raw input, and it lights up if the entry is relevant to the final prediction. Positive or negative, the brighter the color, the more relevant it is to the prediction. The columns correspond to the 48 features whereas the rows correspond to the 10 tracks in the dummy jet. </p>
                     
                     <p>So clearly feature 3 is aggressively activated. You may be wondering why feature 0 is blank. We actually saw this result and circled back to our label equation, realizing that even though both feature 0 and 3 are in the equation, only feature 3 mattered to the label. And LRP realized that before we did.
@@ -256,22 +257,22 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <ul class="list-inline text-center">
-                        <li>
+                        <!-- <li>
                             <a href="#">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
                                 </span>
                             </a>
-                        </li>
-                        <li>
+                        </li> -->
+                        <!-- <li>
                             <a href="#">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
                                 </span>
                             </a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="#">
                                 <span class="fa-stack fa-lg">
@@ -281,7 +282,7 @@
                             </a>
                         </li>
                     </ul>
-                    <p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+                    <p class="copyright text-muted">Copyright &copy; Alex and Cecilia 2021</p>
                 </div>
             </div>
         </div>
