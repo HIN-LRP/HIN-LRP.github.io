@@ -117,7 +117,8 @@
                     <p>There is a specific Higgs decay that we are looking for: the Higgs Boson decaying into a pair of b hadrons. There are several other permutations of higgs decay that can occur but H to bb is the most common. 
                         For the sake of simulation, we have this heavy artificial particle X, which decays into a pair of Higgs bosons, each of which decay into pairs of b hadrons. To make things tougher, a given jet wouldn’t only have b hadrons, it’d also be full of other particles from adjacent and related decays. 
                         </p>
-
+                    
+                        <img src="img/Hbb.png" width=80% class='img-fluid'/>
                     <p>It’s altogether quite chaotic, which is why the classification problem in question is one suited for machine learning.
                     </p>
 
@@ -126,7 +127,7 @@
                     <p>That brings us to the Higgs Boson Interaction network, or HIN. This deep learning model finds pretty desirable success for the problem of Higgs boson identification. </p>
 
                     <p>Interactions networks are a kind of Graph Neural Net. As its name suggests, the interaction network excels at modeling the interaction of objects in complex systems. For the inputs, we take the simulated data and regroup it into a complete directed graph where every node is a particle, with the 48 feature values grouped by particle under the node, and every edge represents a directional relationship between particles.</p>
-
+                    <img src="img/jet_graph.png" width=90% class='img-fluid'/>
                     <p>Why do we represent the jets as graphs? Remember: a jet is a cluster of particles, and there is no inherit ordering of those particles. So graph models are desirable in that they reflect the absence of an inherit ordering. Even better, by fully connecting the graph, we are laying a truth for the model to understand. These particles are all connected in some way, they come from the same collisions, primary decays, maybe even the same secondary decays. It is then just up to model training to decide how connected they are and how important those connections are to determining whether it is a Higgs signal.
                     </p>
 
@@ -274,7 +275,7 @@
                             </a>
                         </li> -->
                         <li>
-                            <a href="#">
+                            <a href="https://github.com/HIN-LRP/Interpret-InteractionNetwork">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-github fa-stack-1x fa-inverse"></i>
