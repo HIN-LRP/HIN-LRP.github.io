@@ -115,11 +115,11 @@
 
 
                     <p>There is a specific Higgs decay that we are looking for: the Higgs Boson decaying into a pair of b hadrons. There are several other permutations of higgs decay that can occur but H to bb is the most common. 
-                        For the sake of simulation, we have this heavy artificial particle X, which decays into a pair of Higgs bosons, each of which decay into pairs of b hadrons. To make things tougher, a given jet wouldn’t only have b hadrons, it’d also be full of other particles from adjacent and related decays. 
+                        For the sake of simulation, we have this heavy artificial particle X, which decays into a pair of Higgs bosons, each of which decay into pairs of b hadrons. 
                         </p>
                     
                         <img src="img/Hbb.png" width=50% class='img-fluid center'/>
-                    <p>It’s altogether quite chaotic, which is why the classification problem in question is one suited for machine learning.
+                    <p> To make things tougher, a given jet wouldn’t only have b hadrons, it’d also be full of other particles from adjacent and related decays. It’s altogether quite chaotic, which is why the classification problem in question is one suited for machine learning.
                     </p>
 
                     <h2 class="section-heading">The Higgs Boson Interaction Network Model</h2>
@@ -140,7 +140,7 @@
                     <img src="img/model_architecture.png" width=90% class='img-fluid center'/>
                     <p>Each block is encoded with its respective transformation sequences: concatenations, linear transformations, batch normalizations, and ReLU activations. Our fully trained model will pass the input data through these blocks and return a softmaxed probability of how likely a jet is to be a Higgs boson signal.</p>
                     
-                    <p>But most importantly here’s how it performs: Here's a lovely 99% ROC AUC.
+                    <p>But most importantly here’s how it performs: a lovely 99% ROC AUC!
                         Compared to a straightforward boosted decision tree, our interaction network AUC boundary is nearly a right angle, which is quite ideal!                        
                    </p>
                    <img src="img/ROC.png" width=65% class='img-fluid center'/>
@@ -165,7 +165,7 @@
                     <img src="img/eq5.png" width=90% class='img-fluid center'/>
                     <p> Now for the equation we’re using to propagate relevance: The LRP-epsilon rule. The complicated math equation defined above is used at each layer to propagate relevance through the model. The rule is derived from the gradient times input concept, with the addition of one more element: The epsilon refers to a small quantity added to the denominator. With this, we avoid numerical instabilities, and also absorb some of the relevance score such that only the most important features are highlighted.</p>
                     
-                    <h4>Dummy Model</h4>
+                    <h3>Dummy Model</h3>
 
                     <p>
                         We made fake data, and labeled it using an equation such that the only important features were 0 and 3. Everything else is useless noise.
@@ -176,67 +176,118 @@
                     <p>So clearly feature 3 is aggressively activated. You may be wondering why feature 0 is blank. We actually saw this result and circled back to our label equation, realizing that even though both feature 0 and 3 are in the equation, only feature 3 mattered to the label. And LRP realized that before we did.
                         So it’s kinda funny how this slight error in the construction of our sanity check actually exposed a deeper truth about the dummy data, which honestly just makes us more confident in the validity of the method.</p>
 
+                        <blockquote>The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.</blockquote>
+
                     <h2 class="section-heading">Visualizing Relevance with HIN-LRP</h2>
-                    
-                    
-                        <!-- <div class="flex-container">
-                            <object data="html/b2_j334.html" height=auto width=100% class="inner-image portrait"></object>
-                            <img src='img/b2j334_3d.png' width=100% class="inner-image landscape"></img>
-                        </div> -->
+                    <p>We’ll be looking at four example jets and diving into how LRP interprets each. For each jet, we’ve created a pair of plots to visualize what our model sees for each jet, and what possibly led to the prediction made. </p>
 
-                        <div class="img-row">
-                            <div class="img-column">
-                                <object data="html/b2_j334.html" height=700 width=100% class="inner-image portrait"></object>
-                            </div>
-                            <div class="img-column">
-                                <img src='img/b2j334_3d.png' width=100% class="inner-image landscape"></img>
-                            </div>
-                        </div>
-                      </div>
-
-
-                    <!-- <div style='display: inline-block; padding: 50px'>
-                        <object data="html/b2_j334.html" height=650 width=300 ></object>
-                        <img src='img/b2j334_3d.png' width=300 class="img-fluid"></img>
-                    </div> -->
-
-
-<!-- 
-                    <p>There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
-
-                    <blockquote>The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.</blockquote>
-
-                    <p>Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.</p>
-
-                    <h2 class="section-heading">Reaching for the Stars</h2>
-
-                    <p>As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.</p>
-
-                    <a href="#">
-                        <img class="img-responsive" src="img/post-sample-image.jpg" alt="">
-                    </a>
-                    <span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span>
-
-                    <p>Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.</p>
-
-                    <p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.</p>
-
-                    <p>Placeholder text by <a href="http://spaceipsum.com/">Space Ipsum</a>. Photographs by <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>.</p> -->
+                    <p>
+                        The heatmap on the left looks familiar right? It’s mostly the same as the one we showed when with the dummy input example. Here, the heatmap is transposed to give an easier view of the 48 features. Each row corresponds to one feature, and each column now corresponds to a track in the jet, sorted by the top row track_pt, aka transverse momentum, in ascending order. Transverse momentum is known to be an important indicator of whether the jet is associated with Higgs boson.  The more intense the color in a cell the more relevant that entry of the input is to the Higgs probability output. Note that the signs of the relevance scores don’t correspond to positive or negative Higgs signal labeling. Only the magnitude matters. 
+                    </p>
                 </div>
             </div>
-            <!-- <div class="row" style='display: inline-block; float:none; margin: 0 auto; padding: 75px'>
-                    <object data="html/b2_j334.html" height=1300 width=650 ></object>
+        </div>
 
+        <div class="img-row">
+            <div class="col-lg-1"></div>
+                <div class="img-column">
+                    <img src="img/plotguide.png" width=100% class='img-fluid center'/>
+                </div>
+            <div class="col-lg-1"></div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p>
+                        To give a better idea of what our model sees in a jet, we can also visualize the significance of the nodes and edges in 3D space, as shown on the right. The 3D network plot projects polaresque coordinates phi and eta on the xy plane, and sets the z axis to momentum, allowing a clearer view of the dense graph representation of the jet and easy comparison to the heatmap. The sizes of the nodes are determined by node relevance scores, and the edge coloring is determined by their significance in the prediction. The edge significance is a positive, calculated value defined intuitively by the amount of information that flow through it. We can elaborate on the mathematical definition later if you’re interested. The edges receive a positive value between 0 to 1, and in the 3D network plot, the most important edges are highlighted in red.
+                    </p>
+                    <p>Let's look at some examples, where the heatmap is interactive so we can see feature values. A library of feature definitions can be found <a href="http://opendata.cern.ch/record/12102">here</a>.</p>
+                    <h3>EXAMPLE 1: 99.94% Higgs Boson Signal</h3>
+                    <p>In this example, the HIN is more than 99.9% confident in its prediction. The colored cells are mostly distributed in columns 14 and 21, suggesting that those two particles are most relevant to the prediction. </p>
+                </div>
             </div>
-            <div class="row" style='display: inline-block; float:none; margin: 0 auto; padding: 75px'>
-                    <div>
-                        <object data="html/b2_j334.html" height=1300 width=655 ></object>
+        </div>
+
+            <div class="img-row">
+                <div class="col-lg-1"></div>
+                <div class="img-column">
+                    <object data="html/b3_j443_stretch.html" height=650 width=105% class="inner-image portrait"></object>
+                </div>
+                <div class="img-column">
+                    <img src='img/b3j443_3d.png' width=100% class="inner-image center"></img>
+                </div>
+                <div class="col-lg-1"></div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <p>The Higgs boson decays into 2 b hadrons, right? Our heatmap implies that the model can perceive the two pronged nature of Higgs bosons decaying into the b hadron pair. Additionally, note how the highest momentum node is the most important, and in the 3D space we see the edge connecting to this node to be highly activated.  Physicists have shown that Higgs boson decay products are likely to have larger transverse momentum values.</p>
+                        
+                        <h3>EXAMPLE 2: 99.93% Higgs Boson Signal</h3>
+                        <p>Here’s another example output of our HIN-LRP. Like in the previous example, the model is very confident that this jet is a Higgs boson signal. Compared to the heatmap in the previous example, this one displays an even more extreme relevance focus along just two columns, again alluding to the two pronged decay into b hadrons.</p>
                     </div>
-                    <div>
-                        <img src='img/b2j334_3d.png' width=650 class="img-fluid"></img>
+                </div>
+            </div>
+            <div class="img-row">
+                <div class="col-lg-1"></div>
+                <div class="img-column">
+                    <object data="html/b2_j334_stretch.html" height=650 width=105% class="inner-image portrait"></object>
+                </div>
+                <div class="img-column">
+                    <img src='img/b2j334_3d.png' width=100% class="inner-image center"></img>
+                </div>
+                <div class="col-lg-1"></div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <p>Those two particles are the most significant nodes in the prediction, something that is clearly affirmed in corresponding 3D plot on the right. Notably, it is the lower momentum tracks in this jet that are more responsible for classification, but even in this situation momentum itself is still a highly relevant feature, as you can see in the blue cell in particle 1. This time the HIN also made its prediction with positional information in addition to the momentum data in feature `trackBTag_PtRel`, highlighted in blue. The bright red cells at `trackBTag_EtaRel` relates to the track’s location in space; `track_VTX_ass` and `track_fromPV` are related to its closeness to the primary vertex. </p>
+                        
+                        <h3>EXAMPLE 3: 99.88% Higgs Boson Signal</h3>
+                        <p>This higgs boson jet is one of the first to get us excited about HIN-LRP’s ability to reveal the model’s relationship to physics. </p>
                     </div>
-            </div> -->
+                </div>
+            </div>
+            <div class="img-row">
+                <div class="col-lg-1"></div>
+                <div class="img-column">
+                    <object data="html/b3_j318_stretch.html" height=650 width=105% class="inner-image portrait"></object>
+                </div>
+                <div class="img-column">
+                    <img src='img/b3j318_3d.png' width=100% class="inner-image center"></img>
+                </div>
+                <div class="col-lg-1"></div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <p>If we draw our attention to the feature track_isMu, aka “is this particle a muon”, we'd see that track 19 is indeed a muon. As that super blue square indicates, the muon track is extremely important information when it comes to the model’s classification. This is great because it reflects real physics phenomena: muons are actually relatively common outputs of b hadron decay. And if b hadrons are decaying, there’s a good chance those b hadrons were descended from a Higgs boson signal. It’s promising that our model has gleaned the importance of the muon, and shows that the HIN is able to learn physics rules from the chaotic collision events to simplify the prediction, and that LRP is able to illuminate the HIN’s understanding in this manner.
+                        </p>
+                        <h3>EXAMPLE 4: 99.95% Higgs Boson Signal</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="img-row">
+                <div class="col-lg-1"></div>
+                <div class="img-column">
+                    <object data="html/b9_j257_stretch.html" height=650 width=105% class="inner-image portrait"></object>
+                </div>
+                <div class="img-column">
+                    <img src='img/b9j257_3d.png' width=100% class="inner-image center"></img>
+                </div>
+                <div class="col-lg-1"></div>
+            </div>
+
+        
             <br/>
+
+
+            <p>Photographs by <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>.</p> 
+
             <!-- <div class="row" style="border:none; background:white; height:210px;">
                 <div class="col-md-offset-1 col-md-5" style="padding-left: 40px;">  
                     <h3>Hello World</h3>
