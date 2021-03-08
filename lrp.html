@@ -87,70 +87,69 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h3>Intro</h3>
-                <p>The core concept behind the different LRP rules is the conservation property of relevance scores. By relevance scores, we are referring to a measurement of how a particular input or a part of that input is related to the output, which, in our case, is the prediction. We will define it properly later in this page.</p>
-            </div>
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <h3>Conservation Property</h3>
-                <p>The conservation property is very much similar to the conservation law in physics. The wikipedia page of the latter states:</p>
+                <h2 class="section-heading">Intro</h2>
+                <p>The core concept behind the different LRP rules is the conservation property of relevance scores. By relevance score, we are referring to a measurement of how influential a particular input or a part of that input is to the output, which, in our case, is the Higgs likelihood prediction. We will define this properly later in this page.</p>
+                <h2 class="section-heading">Conservation Property</h2>
+                <p>The conservation property for LRP is very much similar to the conservation law in physics. The wikipedia page of the latter states:</p>
                 <blockquote>A particular measurable property of an isolated physical system does not change as the system evolves over time.</blockquote>
-                <p>The conservation of relevance is very much the same: each layer of the model can be considered as a closed system at different time; as relevance score propagates through a layer, the total amount of it stays the same.</p>
+                <p>The conservation of relevance is very much the same: each layer of the model can be considered a closed system at different points in time. So, as relevance score propagates through a layer, the total amount of it stays the same.</p>
                 <figure>
                     <img src="img/single_path_layers.png" width=90% class='img-fluid center'/>
-                    <figcaption>Fig.1 Relevance propagate through a single path</figcaption>
+                    <figcaption><i>FIG.1 Relevance propagate through a single path</i></figcaption>
                 </figure>
                 
-                <p>In our HIN, things can get a bit more complicated. Other models have a more straightforward layer by layer architecture like in the plot above, whereas the HIN re-propagates certain layers, particularly the input and the input source node transformation, reapplying those values in multiple instances across the block layers. In simple words, HIN picks up the input at multiple occasions, as shown in the example below
+                <p>In our Higgs boson interaction network (HIN), things can get a bit more complicated. Other models have a more straightforward layer by layer architecture like in the plot above, whereas the HIN re-propagates certain layers, particularly the input and the input source node transformation, reapplying those values in multiple instances across the block layers. In simple terms, HIN reuses the input multiple times, and we have to adjust our LRP accordingly.
                 </p>
                 <figure>
                     <img src="img/multiple_path_layers.png" width=90% class='img-fluid center'/>
-                    <figcaption>Fig.2 Relevance propagate through multiple paths in IN</figcaption>
+                    <figcaption><i>FIG.2 Relevance propagate through multiple paths in IN</i></figcaption>
                 </figure>
                 
-                <p>Remember the water and river analogy we made earlier? Like the flow of water in a river: the total amount is conserved as it flows through the forks. Just like all the forks of the river eventually reaches the sea, the relevance scores propagates through the diverging paths and all reaches the input in the end. Since the total amount of relevance score always stays constant, we could add up the relevance score attributed to the same entry of the input like the way water sums up in the sea.</p>
+                <p>Remember the water and river analogy we made earlier? Like the flow of water in a river: the total amount of relevance score is conserved as it flows through the forks. Just like all the forks of the river eventually reaches the sea, the relevance scores propagates through the diverging paths, all reaching the input at the end from multiple points. Since the total amount of relevance score always stays constant, we could add up the relevance score attributed to a given layer and expect the same approximate value.</p>
                 <p>Now that we have an idea of how LRP propagates relevance scores through each layer, we can take a closer look at what happens within each layer. 
                 </p>
                 <figure>
                     <img src="img/within_layers.png" width=80% class='img-fluid center'/>
-                    <figcaption>Fig.3 Relevance propagation within consecutive layers</figcaption>
+                    <figcaption><i>FIG.3 Relevance propagation within consecutive layers</i></figcaption>
                 </figure>
                 
-                <p>Within the layers, the same idea still applies. Similar to relevance score propagating through the connection of consecutive layers. For neuron i in layer j,  it inherits a fraction of the relevance score from all neurons that it connects to in the consecutive layer k. The amount of relevance score neuron i obtains is decided by how much it has contributed to to those neurons that it connects to in layer k.</p>
+                <p>Within the layers, the same idea still applies, in a way similar to the relevance score propagating through the connections of consecutive layers. For neuron <b>i</b> in layer <b>j</b>,  it inherits a fraction of the relevance score from all neurons that it connects to in the consecutive layer <b>k</b>. The amount of relevance score neuron <b>i</b> obtains is decided by how much it has contributed to to those neurons that it connects to in layer <b>k</b>.</p>
                 <img src="img/eq1.png" width=auto height=40pt class='img-fluid center'/>
                 <p>So how do we quantify neuron i’s contribution? It’s time to formally define what is the relevance score that we’ve been talking about.</p>
-                <h3>Relevance score</h3>
+                <h2 class="section-heading">Relevance score</h2>
                 <p>Recall that we said the relevance score is meant to measure how much a particular part of the input has contributed to the output. So a natural way of quantifying it would be measuring how much change a particular input or a part of that input has induced on the output.</p>
                 <p>Consider the linear function below (some might recognize that this is in fact the definition of a linear layer in PyTorch):
                 </p>
                 <img src="img/eq2.png" width=auto height=40pt class='img-fluid center'/>
-                <p>Here x,y, and b are vectors, and W is a matrix.
+                <p>Here <b>x</b>, <b>y</b>, and <b>b</b> are vectors, and <b>W</b> is a matrix.
                 </p>
-                <p>From Calculus I, we’ve learned that the gradient of a function tells you the rate of change per unit input. Since instead of unit input, we are more interested in the amount of change brought by certain input, we take the product of the gradient and that input:
+                <p>Calculus tells us that the gradient of a function represents the rate of change per unit input. Since instead of unit input, we are more interested in the amount of change brought by a certain input, we actually take the product of the gradient and that input:
                 </p>
                 <img src="img/eq3.png" width=auto height=40pt class='img-fluid center'/>
-                <p>Naturally, the fraction of contribution for the u’th entry of input x would be the amount of change by this entry over the total change
+                <p>Naturally, the fraction of contribution for the <b>u</b>'th entry of input <b>x</b> would be the amount of change by this entry over the total change:
                 </p>
                 <img src="img/eq4.png" width=auto height=60pt class='img-fluid center'/>
                 <p>
                     Now that we have the fraction of contribution, we can substitute it back into the equation to get the basic distribution rule of LRP, known as the LRP-0 rule.
                 </p>
-                <p>In our project, we used a slightly more complicated distribution rule, the LRP-epsilon rule, for a better performance. </p>
-                <h3>Edge Significance Score</h3>
-                <p> Recall from the 3D network plots, we defined a new variable edge significance in order to measure how important each edge is to the prediction. It can be considered as a variant derived from the relevance score. 
+                <p>In our project, we used a slightly more complicated distribution rule, the LRP-ε rule, for a better performance. The details of that are articulated in the main page.</p>
+                
+                <h2 class="section-heading">Edge Significance Score</h2>
+                <p> In the 3D network plots, we defined a new variable "edge significance" in order to measure how important each edge is to the prediction. This can be considered a variant of the relevance score. 
                 </p>
-                <p>The edges in the jet graphs are meant for the model to learn how each particle might have interacted with each other. They are not an actual part of the input but pathways that allow information to flow between the nodes. So if we consider each graph as a city and the edges are the roads that connect to each other. Then intuitively the importance of each edge is decided by how busy it is, or the traffic throughput of it.
+                <p>The edges formed in the jet graphs are meant for the model to learn how each particle might have interacted with each other. They are not an actual part of the input but rather pathways that allow information to flow between the nodes. So if we consider each graph as a city and the edges are the roads that connect to each other, then intuitively the importance of each edge is decided by how busy it is, or the traffic passing through of it.
                 </p>
                 <figure>
                     <img src="img/traffic.jpg" width=70% class='img-fluid center'/>
-                    <figcaption>Fig.4 A busy road with heavy traffic.</figcaption>
+                    <figcaption><i>FIG.4 A busy road with heavy traffic.</i></figcaption>
                 </figure>
                 
-                <p>Following this idea, we defined the measurement edge significance to measure the importance of the edge by the amount of information, or contribution, flow through it in the decision making process.</p>
-                <p>For an edge connecting from track t<sub>i</sub> to track t<sub>j</sub>, call it e<sub>ij</sub>. Since each edge is defined by their source and destination nodes, 
+                <p>Following this idea, we defined the measurement edge significance to measure the importance of the edge by the amount of information, or contribution, flowing through it in the decision making process.</p>
+                <p>For an edge connecting from track <b>t</b><sub><i>i</i></sub> to track <b>t</b><sub><i>j</i></sub>, let's call it <b>e</b><sub><i>ij</i></sub>. Since each edge is defined by their source and destination nodes, 
                 the edge relevance of this edge is given by its source node and destination node, that is, it has 48 source node features and 48 destination node features.  
                 </p>
                 <img src="img/eq6.png" width=auto height=40pt class='img-fluid center'/>
-                <p>The edge significance S<sub>ij</sub> is a positive scalar value, given by the frobenius norm of the edge relevance score normalized with respect to all the edges in the graph
+                <p>The edge significance <b>S</b><sub><i>ij</i></sub> is a positive scalar value, given by the frobenius norm of the edge relevance score normalized with respect to all the edges in the graph. This is why those edge significance values in the chart have a negative denotation or threshold.
                 </p>
                 <img src="img/eq7.png" width=auto height=60pt class='img-fluid center'/>
             </div>
