@@ -42,6 +42,7 @@ figcaption {
 
   .center-btn {
     display: block;
+    min-width: 150pt;
     margin-left: 40%;
     margin-right: 40%;
   }
