@@ -97,7 +97,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <p>
+                      <p>
                         <a class="btn btn-primary center-btn" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">ABSTRACT</a>
                       </p>
                       <div class="row" style="padding-left: 15px;">
@@ -109,22 +109,21 @@
                             </div>
                         </div>
                       </div>
-                    <!-- <h3 >ABSTRACT </h3> -->
-                    
-                        <p></p>
+
                     <h2 class="section-heading">Intro</h2>
 
-                    <p>Graph neural networks (GNN) are notoriously difficult to interpret, and those employed in the particle physics domain are no different. The graph interaction network has gained popularity with high energy physicists studying fundamental particles because this graph model achieves a highly competitive accuracy, while still working with relatively simple and unprocessed data. However, it is often not fully understood how or why the graph interaction networks make their classifications. Layerwise Relevance Propagation is a method we use to investigate how these models' inner workings might relate to the physical properties of the universe.</p>
+                    <p>Graph neural networks (GNN) are notoriously difficult to interpret, and those employed in the particle physics domain are no different. The interaction network has gained popularity with high energy physicists studying fundamental particles because this graph model achieves a highly competitive accuracy, while still working with relatively simple and unprocessed data. However, both broadly and in the physics domain, it is often not fully understood how or why the graph interaction networks make their classifications. Layerwise Relevance Propagation is the method we've chosen to use to investigate how these models' inner workings might relate to the physical properties of the universe.</p>
 
                     <!-- <h3>the collider and the boson</h2> -->
 
-                    <p>The Higgs boson is a particle that was hypothesized in 1964 by Peter Higgs, and essentially suggested to represent a universal field that is essentially responsible for mass. Big Deal, right? But it took decades before it was actually confirmed. Evidence finally appeared in 2012, at the Large Hadron Collider (LHC), where scientists slam particles together really really fast to make other particles, rare and important particles like the higgs boson. But even with the particle collider constantly firing, a higgs event is hard to come by. Not only that, these detectors don’t get to pick up a literal higgs boson, because it exists for only a brief moment in time before decaying. The detector has to look at the decays, which come in the form of particle jets, which is, fittingly, the form of our data.</p>
+                    <p>The Higgs boson is a particle that was hypothesized in 1964 by Peter Higgs, and is essentially suggested to represent a universal field that is responsible for the property of mass. Big deal, right? But it took decades before it was actually confirmed. Evidence finally appeared in 2012, at the Large Hadron Collider (LHC), where scientists slam particles together really really fast to make other particles, rare and important particles like the Higgs boson. But even with the particle collider constantly firing, a Higgs event is hard to come by. Not only that, these detectors don’t get to pick up a literal Higgs boson, because it exists for only a brief moment in time before decaying. The detector has to look at the decays, which come in the form of particle jets, and deduce whether or not a Higgs boson event was responsible. Fittingly, these particle jets are the basis of our data.</p>
 
                     <h2 class="section-heading">Particle Jet Data</h2>
                     <p>Context on these "jets", and our data. When a spray of particles hit the detector, the particle flight pathways and measurements are reconstructed into what are called tracks, and then grouped under cone-like clusters. But for the purposes of the model, it's good to know that we actually train on simulation data. Why? Because in quantum physics, we can only predict things probabilistically, so there is no way to confidently label real LHC data. We can say “oh, this was probably a Higgs boson,” but there’s no way of really fully knowing.</p>
                     
-                    <p>The simulation constructs data on a fully ground up basis, building off of physics rules that have been theorized and confirmed. A benefit of this is that we can also lessen the rarity of the Higgs boson signal, so that it’s actually useful to train this model. In the simulated dataset, every entry is an individual jet, and each jet can have a variable number of particles, from as little as only 2 tracks to more than 60. For each jet we’ve isolated 48 features, features like momentum, mass, angle...ultimately, the goal is to look at a jet, and say whether it came from a Higgs signal, or is simply background.</p>
+                    <p>So instead, the simulation constructs our data on a fully ground up basis, building off of physics rules that have been theorized and confirmed. A benefit of this is that we can also lessen the rarity of the Higgs boson signal, so that it’s actually useful to train this model. In the simulated dataset, every entry is an individual jet, and each jet can have a variable number of particles, from as little as only 2 tracks to more than 60. For each jet we’ve isolated 48 features, features like momentum, mass, angle...ultimately, the goal is to look at a jet, and say whether it came from a Higgs signal, or is simply background.</p>
 
+                    <h3>The Signal: H to bb</h3>
 
                     <p>There is a specific Higgs decay that we are looking for: the Higgs Boson decaying into a pair of b hadrons. There are several other permutations of higgs decay that can occur but H to bb is the most common. 
                         For the sake of simulation, we have this heavy artificial particle X, which decays into a pair of Higgs bosons, each of which decay into pairs of b hadrons. 
@@ -141,7 +140,7 @@
 
                     <h2 class="section-heading">The Higgs Boson Interaction Network Model</h2>
 
-                    <p>That brings us to the Higgs Boson Interaction network, or HIN. This deep learning model finds pretty desirable success for the problem of Higgs boson identification. </p>
+                    <p>That brings us to the Higgs Boson Interaction network, or HIN. This deep learning model finds pretty desirable success for the problem of Higgs boson identification. See <a href="https://arxiv.org/abs/1909.12285">this paper</a>.</p>
 
                     <p>Interactions networks are a kind of Graph Neural Net. As its name suggests, the interaction network excels at modeling the interaction of objects in complex systems. For the inputs, we take the simulated data and regroup it into a complete directed graph where every node is a particle, with the 48 feature values grouped by particle under the node, and every edge represents a directional relationship between particles.</p>
                     <figure>
@@ -155,7 +154,7 @@
                     </p>
 
                     <p>
-                        We built the model in PyTorch Geometric, which really helps facilitate a lot of the graph connections and the training structure. The core part of the HIN is the interaction block. 
+                        We built the model in <a href="https://pytorch-geometric.readthedocs.io/en/latest/">PyTorch Geometric</a>, which really helps facilitate a lot of the graph connections and the training structure. The core part of the HIN is the interaction block. 
 
                         The interconnectedness of this interaction block allows us to model the flow of information between nodes, or pairs of particles. PyTorch Geometric’s MetaLayer function abstracts a lot of this interconnectedness for us. Note how when the new edge hidden features are calculated, they influence the new node hidden features and global hidden features, and likewise when new node features are calculated, and so on.
                     </p>
@@ -185,7 +184,7 @@
 
                     <h2 class="section-heading">Layerwise Relevance Propagation</h2>
 
-                    <p>LRP is a technique that has found use in several other neural networks, especially image convolutional neural networks. More recently, its potential for GNN explanation is being discovered. Like water in a forking river, we branch across the model pathways, distributing relevance scores throughout each layer, all the way back to the inputs.
+                    <p>LRP is a technique that has found use in interpreting several other neural networks, particularly image convolutional neural networks. More recently, its potential for GNN explanation is being discovered. Like water in a forking river, we branch across the model pathways, distributing relevance scores throughout each layer, all the way back to the inputs.
                         In simple words, we want to use LRP to find out how relevant each part of the input is to the output. So we take our input matrix, use some LRP magic, and for every value in the input, we get a corresponding score telling us how relevant it is the the output. 
                         </p>
 
@@ -196,7 +195,7 @@
                         <figcaption><i>FIG.5 From input (Higgs boson likelihood) to output (relevance scores)</i></figcaption>
                     </figure>
                     
-                    <p>Now, you might have realized that LRP is very similar to a regular back-propagation of the model, except that it is propagating the relevance score. It operates on a gradient times input convention that refers to the Taylor expansion based calculation used to get relevancy at each layer.
+                    <p>Now, you might have realized that LRP is very similar to a regular back-propagation of the model, except that it is propagating the relevance score. It operates on a gradient times input—essentially a Taylor expansion based calculation used to get relevancy at each layer.
 
                     </p>
                     <figure>
@@ -218,7 +217,7 @@
                     <h3>Dummy Model</h3>
 
                     <p>
-                        We made fake data, and labeled it using an equation such that the only important features were 0 and 3. Everything else is useless noise.
+                        To test our LRP, we made fake data, and labeled it using an equation such that the only important features were 0 and 3. Everything else is useless noise.
                     </p>
                     <figure>
                         <img src="img/sc.png" width=100% class='img-fluid'/>
@@ -227,14 +226,14 @@
                     
                     <p>How do we read this map? The relevance scores are visualized in this heatmap, which has the same dimensions as the input. Each cell in the heatmap corresponds to an entry in the raw input, and it lights up if the entry is relevant to the final prediction. Positive or negative, the brighter the color, the more relevant it is to the prediction. The columns correspond to the 48 features whereas the rows correspond to the 10 tracks in the dummy jet. </p>
                     
-                    <p>So clearly feature 3 is aggressively activated. You may be wondering why feature 0 is blank. We actually saw this result and circled back to our label equation, realizing that even though both feature 0 and 3 are in the equation, only feature 3 mattered to the label. And LRP realized that before we did.
-                        So it’s kinda funny how this slight error in the construction of our sanity check actually exposed a deeper truth about the dummy data, which honestly just makes us more confident in the validity of the method.</p>
+                    <p>So clearly feature 3 is aggressively activated. You may be wondering why feature 0 is blank. We actually saw this result and circled back to our label equation, realizing that even though both feature 0 and 3 are in the equation, only feature 3 mattered to the label. And LRP realized that before we did!
+                        So it’s quite funny how this slight error in the construction of our sanity check actually exposed a deeper truth about the dummy data, which honestly just makes us more confident in the validity of the method.</p>
 
                     <h2 class="section-heading">Visualizing Relevance with HIN-LRP</h2>
                     <p>We’ll be looking at four example jets and diving into how LRP interprets each. For each jet, we’ve created a pair of plots to visualize what our model sees for each jet, and what possibly led to the prediction made. </p>
 
                     <p>
-                        The heatmap on the left looks familiar right? It’s mostly the same as the one we showed when with the dummy input example. Here, the heatmap is transposed to give an easier view of the 48 features. Each row corresponds to one feature, and each column now corresponds to a track in the jet, sorted by the top row <b>track_pt</b>, aka transverse momentum, in ascending order. Transverse momentum is known to be an important indicator of whether the jet is associated with Higgs boson.  The more intense the color in a cell the more relevant that entry of the input is to the Higgs probability output. Note that the signs of the relevance scores don’t correspond to positive or negative Higgs signal labeling. Only the magnitude matters. 
+                        The heatmap on the left looks familiar right? It’s mostly the same as the one we showed with the dummy input example. Here, the heatmap is transposed to give an easier view of the 48 features. Each row corresponds to one feature, and each column now corresponds to a track in the jet, sorted by the top row <b>track_pt</b>, aka transverse momentum, in ascending order. Transverse momentum is known to be an important indicator of whether the jet is associated with Higgs boson.  The more intense the color in a cell the more relevant that entry of the input is to the Higgs probability output. Note that the signs of the relevance scores don’t correspond to positive or negative Higgs signal labeling. Only the magnitude matters. 
                     </p>
                 </div>
             </div>
@@ -257,9 +256,9 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <p>
-                        To give a better idea of what our model sees in a jet, we can also visualize the significance of the nodes and edges in 3D space, as shown on the right. The 3D network plot projects polaresque coordinates phi and eta on the xy plane, and sets the z axis to momentum, allowing a clearer view of the dense graph representation of the jet and easy comparison to the heatmap. The sizes of the nodes are determined by node relevance scores, and the edge coloring is determined by their significance in the prediction. The edge significance is a positive, calculated value defined intuitively by the amount of information that flow through it. We can elaborate on the mathematical definition later if you’re interested. The edges receive a positive value between 0 to 1, and in the 3D network plot, the most important edges are highlighted in red.
+                        To give a better idea of what our model sees in a jet, we also visualize the significance of the nodes and edges in 3D space, as shown on the right. The 3D network plot projects "polaresque" coordinates φ and η (<b>track_phirel</b>, <b>track_etarel</b>) on the xy plane, and sets the z axis to momentum (again), allowing a clearer view of the dense graph representation of the jet, as well as easy comparison to the heatmap. The sizes of the nodes are determined by node relevance scores, and the edge coloring is determined by their significance in the prediction. The edge significance is a positive, calculated value defined intuitively by the amount of information that flow through it. We can elaborate on the mathematical definition later if you’re interested. The edges receive a positive value between 0 to 1, and in the 3D network plot, the most important edges are highlighted in red.
                     </p>
-                    <p>Let's look at some examples, where the <b>heatmap is interactive </b>so we can see feature values. A library of feature definitions can be found <a href="http://opendata.cern.ch/record/12102">here</a>.</p>
+                    <p>Let's look at some examples, where the <b>heatmap is interactive </b>so we can see feature values. The library of feature definitions can be found <a href="http://opendata.cern.ch/record/12102">here</a>.</p>
                     <br/>
 
                     <h3>EXAMPLE 1: 99.94% Higgs Boson Signal</h3>
@@ -282,7 +281,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                        <p>The Higgs boson decays into 2 b hadrons, right? Our heatmap implies that the model can perceive the two pronged nature of Higgs bosons decaying into the b hadron pair. Additionally, note how the highest momentum node is the most important, and in the 3D space we see the edge connecting to this node to be highly activated.  Physicists have shown that Higgs boson decay products are likely to have larger transverse momentum values.</p>
+                        <p>The Higgs boson decays into two b hadrons, right? Our heatmap implies that the model can perceive the two pronged nature of Higgs bosons decaying into the b hadron pair. Additionally, note how the highest momentum node is the most important, and in the 3D space we see the edge connecting to this node to be highly activated.  Physicists have shown that Higgs boson decay products are likely to have larger transverse momentum values.</p>
                         <br/>
 
                         <h3>EXAMPLE 2: 99.93% Higgs Boson Signal</h3>
@@ -326,7 +325,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                        <p>If we draw our attention to the feature <b>track_isMu</b>, aka “is this particle a muon”, we'd see that track 19 is indeed a muon. As that super blue square indicates, the muon track is extremely important information when it comes to the model’s classification. This is great because it reflects real physics phenomena: muons are actually relatively common outputs of b hadron decay. And if b hadrons are decaying, there’s a good chance those b hadrons were descended from a Higgs boson signal. It’s promising that our model has gleaned the importance of the muon, and shows that the HIN is able to learn physics rules from the chaotic collision events to simplify the prediction, and that LRP is able to illuminate the HIN’s understanding in this manner.
+                        <p>If we draw our attention to the feature <b>track_isMu</b>, aka “is this particle a muon”, we'd see that track 19 is indeed a muon. As that super blue square indicates, the muon track is extremely important information when it comes to the model’s classification. This is great because it reflects real physics phenomena: muons are actually relatively common outputs of b hadron decay. And if b hadrons are decaying, there’s a good chance those b hadrons were descended from a Higgs boson signal. It’s promising that our model has gleaned the importance of the muon, and shows that the HIN is able to learn physics rules from the chaotic collision events, and that LRP is able to illuminate the HIN’s understanding in this manner.
                         </p>
                         <br/>
 
@@ -351,7 +350,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                        <p>In track 19, a lot of the cells are highly activated, which indicates that the model utilized a host of positional information like momentum from feature <b>track_pt</b>, angle from the jet axis from <b>track_deltaR</b>, <b>track_etarel</b>, and angle from the secondary vertex <b>track_drminsv</b>. More importantly, the cell corresponding to the boolean feature <b>track_puppiw</b> at the bottom is also highlighted in red. Alongside this positional information in track 19 is the boolean for feature <b>track_puppiw</b>, which indicates whether the track is "pileup-like", or more colloquially, an intrusive track from a separate jet decay. This indicates that our model understands that all that other positional information is only helpful given that this track is actually native to this jet. </p>
+                        <p>In track 19, many cells are highly activated, which indicates that the model utilized a host of positional information like momentum from feature <b>track_pt</b>, angle from the jet axis from <b>track_deltaR</b>, <b>track_etarel</b>, and angle from the secondary vertex <b>track_drminsv</b>. Alongside this positional information in track 19 is the boolean for feature <b>track_puppiw</b>, which indicates whether the track is "pileup-like", or more colloquially, an intrusive track from a separate jet decay. This indicates that our model understands that all that other positional information is only helpful given that this track is actually native to this jet. </p>
                         <p>The other important cell is the bright red cell in track 18 under <b>track_isEl</b>, or "track is electron".
                             Electrons are leptons, like muons, and also emerge in the decay of b hadrons at a significant rate. So, this particle feature, together with all the other information from track 19, is a strong indicator of the jet being related to a Higgs boson when present. 
                         </p>
