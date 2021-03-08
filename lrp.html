@@ -95,14 +95,26 @@
                 <p>The conservation property is very much similar to the conservation law in physics. The wikipedia page of the latter states:</p>
                 <blockquote>A particular measurable property of an isolated physical system does not change as the system evolves over time.</blockquote>
                 <p>The conservation of relevance is very much the same: each layer of the model can be considered as a closed system at different time; as relevance score propagates through a layer, the total amount of it stays the same.</p>
-                <img src="img/single_path_layers.png" width=90% class='img-fluid center'/>
+                <figure>
+                    <img src="img/single_path_layers.png" width=90% class='img-fluid center'/>
+                    <figcaption>Fig.1 Relevance propagate through a single path</figcaption>
+                </figure>
+                
                 <p>In our HIN, things can get a bit more complicated. Other models have a more straightforward layer by layer architecture like in the plot above, whereas the HIN re-propagates certain layers, particularly the input and the input source node transformation, reapplying those values in multiple instances across the block layers. In simple words, HIN picks up the input at multiple occasions, as shown in the example below
                 </p>
-                <img src="img/multiple_path_layers.png" width=90% class='img-fluid center'/>
+                <figure>
+                    <img src="img/multiple_path_layers.png" width=90% class='img-fluid center'/>
+                    <figcaption>Fig.2 Relevance propagate through multiple paths in IN</figcaption>
+                </figure>
+                
                 <p>Remember the water and river analogy we made earlier? Like the flow of water in a river: the total amount is conserved as it flows through the forks. Just like all the forks of the river eventually reaches the sea, the relevance scores propagates through the diverging paths and all reaches the input in the end. Since the total amount of relevance score always stays constant, we could add up the relevance score attributed to the same entry of the input like the way water sums up in the sea.</p>
                 <p>Now that we have an idea of how LRP propagates relevance scores through each layer, we can take a closer look at what happens within each layer. 
                 </p>
-                <img src="img/within_layers.png" width=80% class='img-fluid center'/>
+                <figure>
+                    <img src="img/within_layers.png" width=80% class='img-fluid center'/>
+                    <figcaption>Fig.3 Relevance propagation within consecutive layers</figcaption>
+                </figure>
+                
                 <p>Within the layers, the same idea still applies. Similar to relevance score propagating through the connection of consecutive layers. For neuron i in layer j,  it inherits a fraction of the relevance score from all neurons that it connects to in the consecutive layer k. The amount of relevance score neuron i obtains is decided by how much it has contributed to to those neurons that it connects to in layer k.</p>
                 <img src="img/eq1.png" width=auto height=40pt class='img-fluid center'/>
                 <p>So how do we quantify neuron i’s contribution? It’s time to formally define what is the relevance score that we’ve been talking about.</p>
@@ -128,7 +140,11 @@
                 </p>
                 <p>The edges in the jet graphs are meant for the model to learn how each particle might have interacted with each other. They are not an actual part of the input but pathways that allow information to flow between the nodes. So if we consider each graph as a city and the edges are the roads that connect to each other. Then intuitively the importance of each edge is decided by how busy it is, or the traffic throughput of it.
                 </p>
-                <img src="img/traffic.jpg" width=70% class='img-fluid center'/>
+                <figure>
+                    <img src="img/traffic.jpg" width=70% class='img-fluid center'/>
+                    <figcaption>Fig.4 A busy road with heavy traffic.</figcaption>
+                </figure>
+                
                 <p>Following this idea, we defined the measurement edge significance to measure the importance of the edge by the amount of information, or contribution, flow through it in the decision making process.</p>
                 <p>For an edge connecting from track t<sub>i</sub> to track t<sub>j</sub>, call it e<sub>ij</sub>. Since each edge is defined by their source and destination nodes, 
                 the edge relevance of this edge is given by its source node and destination node, that is, it has 48 source node features and 48 destination node features.  
