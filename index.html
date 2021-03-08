@@ -176,8 +176,6 @@
                     <p>So clearly feature 3 is aggressively activated. You may be wondering why feature 0 is blank. We actually saw this result and circled back to our label equation, realizing that even though both feature 0 and 3 are in the equation, only feature 3 mattered to the label. And LRP realized that before we did.
                         So it’s kinda funny how this slight error in the construction of our sanity check actually exposed a deeper truth about the dummy data, which honestly just makes us more confident in the validity of the method.</p>
 
-                        <blockquote>The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.</blockquote>
-
                     <h2 class="section-heading">Visualizing Relevance with HIN-LRP</h2>
                     <p>We’ll be looking at four example jets and diving into how LRP interprets each. For each jet, we’ve created a pair of plots to visualize what our model sees for each jet, and what possibly led to the prediction made. </p>
 
@@ -202,7 +200,9 @@
                     <p>
                         To give a better idea of what our model sees in a jet, we can also visualize the significance of the nodes and edges in 3D space, as shown on the right. The 3D network plot projects polaresque coordinates phi and eta on the xy plane, and sets the z axis to momentum, allowing a clearer view of the dense graph representation of the jet and easy comparison to the heatmap. The sizes of the nodes are determined by node relevance scores, and the edge coloring is determined by their significance in the prediction. The edge significance is a positive, calculated value defined intuitively by the amount of information that flow through it. We can elaborate on the mathematical definition later if you’re interested. The edges receive a positive value between 0 to 1, and in the 3D network plot, the most important edges are highlighted in red.
                     </p>
-                    <p>Let's look at some examples, where the heatmap is interactive so we can see feature values. A library of feature definitions can be found <a href="http://opendata.cern.ch/record/12102">here</a>.</p>
+                    <p>Let's look at some examples, where the <b>heatmap is interactive </b>so we can see feature values. A library of feature definitions can be found <a href="http://opendata.cern.ch/record/12102">here</a>.</p>
+                    <br/>
+
                     <h3>EXAMPLE 1: 99.94% Higgs Boson Signal</h3>
                     <p>In this example, the HIN is more than 99.9% confident in its prediction. The colored cells are mostly distributed in columns 14 and 21, suggesting that those two particles are most relevant to the prediction. </p>
                 </div>
@@ -224,7 +224,8 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                         <p>The Higgs boson decays into 2 b hadrons, right? Our heatmap implies that the model can perceive the two pronged nature of Higgs bosons decaying into the b hadron pair. Additionally, note how the highest momentum node is the most important, and in the 3D space we see the edge connecting to this node to be highly activated.  Physicists have shown that Higgs boson decay products are likely to have larger transverse momentum values.</p>
-                        
+                        <br/>
+
                         <h3>EXAMPLE 2: 99.93% Higgs Boson Signal</h3>
                         <p>Here’s another example output of our HIN-LRP. Like in the previous example, the model is very confident that this jet is a Higgs boson signal. Compared to the heatmap in the previous example, this one displays an even more extreme relevance focus along just two columns, again alluding to the two pronged decay into b hadrons.</p>
                     </div>
@@ -245,7 +246,8 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                         <p>Those two particles are the most significant nodes in the prediction, something that is clearly affirmed in corresponding 3D plot on the right. Notably, it is the lower momentum tracks in this jet that are more responsible for classification, but even in this situation momentum itself is still a highly relevant feature, as you can see in the blue cell in particle 1. This time the HIN also made its prediction with positional information in addition to the momentum data in feature `trackBTag_PtRel`, highlighted in blue. The bright red cells at `trackBTag_EtaRel` relates to the track’s location in space; `track_VTX_ass` and `track_fromPV` are related to its closeness to the primary vertex. </p>
-                        
+                        <br/>
+
                         <h3>EXAMPLE 3: 99.88% Higgs Boson Signal</h3>
                         <p>This higgs boson jet is one of the first to get us excited about HIN-LRP’s ability to reveal the model’s relationship to physics. </p>
                     </div>
@@ -267,7 +269,12 @@
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                         <p>If we draw our attention to the feature track_isMu, aka “is this particle a muon”, we'd see that track 19 is indeed a muon. As that super blue square indicates, the muon track is extremely important information when it comes to the model’s classification. This is great because it reflects real physics phenomena: muons are actually relatively common outputs of b hadron decay. And if b hadrons are decaying, there’s a good chance those b hadrons were descended from a Higgs boson signal. It’s promising that our model has gleaned the importance of the muon, and shows that the HIN is able to learn physics rules from the chaotic collision events to simplify the prediction, and that LRP is able to illuminate the HIN’s understanding in this manner.
                         </p>
+                        <br/>
+
                         <h3>EXAMPLE 4: 99.95% Higgs Boson Signal</h3>
+                        <p>
+                        In this last example, the heatmap conveys two core pieces information about our model’s decision. 
+                        </p>
                     </div>
                 </div>
             </div>
@@ -282,7 +289,18 @@
                 <div class="col-lg-1"></div>
             </div>
 
-        
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                        <p>In track 19, a lot of the cells are highly activated, which indicates that the model utilized a host of positional information like momentum from feature `track_pt`, angle from the jet axis from `track_deltaR`, `track_etarel`, and angle from the secondary vertex `track_drminsv`. More importantly, the cell corresponding to the boolean feature `track_puppiw` at the bottom is also highlighted in red. Alongside this positional information in track 19 is the boolean for feature track_puppiw, which indicates whether the track is "pileup-like", or more colloquially, an intrusive track from a separate jet decay. This indicates that our model understands that all that other positional information is only helpful given that this track is actually native to this jet. </p>
+                        <p>The other important cell is the bright red cell in track 18 under track_isEl, or "track is electron".
+                            Electrons are leptons, like muons, and also emerge in the decay of b hadrons at a significant rate. So, this particle feature, together with all the other information from track 19, is a strong indicator of the jet being related to a Higgs boson when present. 
+                        </p>
+
+                        <h2 class="section-heading">Conclusion</h2>
+                    </div>
+                </div>
+            </div>
             <br/>
 
 
