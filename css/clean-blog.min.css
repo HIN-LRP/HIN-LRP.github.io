@@ -31,3 +31,17 @@ figcaption {
   cite {
       font-size: x-small;
   }
+
+  .btn {
+      background-color: rgb(26,51,84);
+      color:white;
+      text-decoration: none;
+      font-size: larger;
+      border-color: transparent;
+  }
+
+  .center-btn {
+    display: block;
+    margin-left: 40%;
+    margin-right: 40%;
+  }
