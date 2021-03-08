@@ -132,7 +132,8 @@
                         <figure>
                             <img src="img/Hbb.png" width=50% class='img-fluid center'/>
                             <figcaption>
-                                <i>FIG.1 Higgs bosons decaying into pairs of b hadrons </i>
+                                <i>FIG.1 Higgs bosons decaying into pairs of b hadrons</i>
+                                <br><cite>Das, Souvik. "Pair Production Of The Higgs Boson". Home.Fnal.Gov, 2021, https://home.fnal.gov/~souvik/HH/index.html. Accessed 26 Feb 2021.</cite>
                             </figcaption>
                         </figure>
                     <p> To make things tougher, a given jet wouldn’t only have b hadrons, it’d also be full of other particles from adjacent and related decays. It’s altogether quite chaotic, which is why the classification problem in question is one suited for machine learning.
@@ -171,7 +172,7 @@
                         Compared to a straightforward boosted decision tree, our interaction network AUC boundary is nearly a right angle, which is quite ideal!                        
                    </p>
                    <figure>
-                    <img src="img/ROC.png" width=65% class='img-fluid center'/>
+                    <img src="img/ROC.png" width=55% class='img-fluid center'/>
                     <figcaption><i>
                         FIG.4 ROC AUC for the Higgs boson interaction network and a Boosted Decision Tree. The dash line in red serves as a baseline reference.
                     </i>
@@ -200,7 +201,10 @@
                     </p>
                     <figure>
                         <img src="img/lrp.png" width=90% class='img-fluid center'/>
-                        <figcaption><i>FIG.6 LRP propagation</i></figcaption>
+                        <figcaption><i>FIG.6 LRP propagation</i>
+                            <br>
+                        <cite>"Heatmapping.Org". Heatmapping.Org, 2021, http://www.heatmapping.org/. Accessed 4 Mar 2021.
+                        </cite></figcaption>
                     </figure>
                     
                     <p>Look at this diagram. Follow the color density from the output as it moves backwards through the nodes. The more “relevant” nodes get more weight, and therefore color. For our model, this will allow us to highlight relevancy for both nodes, and edges.</p>
@@ -208,7 +212,7 @@
                     <p> Now for the equation we’re using to propagate relevance: The LRP-epsilon rule. The complicated math equation defined above is used at each layer to propagate relevance through the model. The rule is derived from the gradient times input concept, with the addition of one more element: The epsilon refers to a small quantity added to the denominator. With this, we avoid numerical instabilities, and also absorb some of the relevance score such that only the most important features are highlighted.</p>
 
                     <p>
-                        For the more mathematically inclined, see the <a href="lrp.html">LRP page</a> for more a more in depth breakdown
+                        For the more mathematically inclined, see the <a href="lrp.html">LRP page</a> for more a more in depth breakdown.
                     </p>
                     
                     <h3>Dummy Model</h3>
@@ -230,7 +234,7 @@
                     <p>We’ll be looking at four example jets and diving into how LRP interprets each. For each jet, we’ve created a pair of plots to visualize what our model sees for each jet, and what possibly led to the prediction made. </p>
 
                     <p>
-                        The heatmap on the left looks familiar right? It’s mostly the same as the one we showed when with the dummy input example. Here, the heatmap is transposed to give an easier view of the 48 features. Each row corresponds to one feature, and each column now corresponds to a track in the jet, sorted by the top row track_pt, aka transverse momentum, in ascending order. Transverse momentum is known to be an important indicator of whether the jet is associated with Higgs boson.  The more intense the color in a cell the more relevant that entry of the input is to the Higgs probability output. Note that the signs of the relevance scores don’t correspond to positive or negative Higgs signal labeling. Only the magnitude matters. 
+                        The heatmap on the left looks familiar right? It’s mostly the same as the one we showed when with the dummy input example. Here, the heatmap is transposed to give an easier view of the 48 features. Each row corresponds to one feature, and each column now corresponds to a track in the jet, sorted by the top row <b>track_pt</b>, aka transverse momentum, in ascending order. Transverse momentum is known to be an important indicator of whether the jet is associated with Higgs boson.  The more intense the color in a cell the more relevant that entry of the input is to the Higgs probability output. Note that the signs of the relevance scores don’t correspond to positive or negative Higgs signal labeling. Only the magnitude matters. 
                     </p>
                 </div>
             </div>
@@ -300,7 +304,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                        <p>Those two particles are the most significant nodes in the prediction, something that is clearly affirmed in corresponding 3D plot on the right. Notably, it is the lower momentum tracks in this jet that are more responsible for classification, but even in this situation momentum itself is still a highly relevant feature, as you can see in the blue cell in particle 1. This time the HIN also made its prediction with positional information in addition to the momentum data in feature `trackBTag_PtRel`, highlighted in blue. The bright red cells at `trackBTag_EtaRel` relates to the track’s location in space; `track_VTX_ass` and `track_fromPV` are related to its closeness to the primary vertex. </p>
+                        <p>Those two particles are the most significant nodes in the prediction, something that is clearly affirmed in corresponding 3D plot on the right. Notably, it is the lower momentum tracks in this jet that are more responsible for classification, but even in this situation momentum itself is still a highly relevant feature, as you can see in the blue cell in particle 1. This time the HIN also made its prediction with positional information in addition to the momentum data in feature <b>trackBTag_PtRel</b>, highlighted in blue. The bright red cells at <b>trackBTag_EtaRel</b> relates to the track’s location in space; <b>track_VTX_ass</b> and <b>track_fromPV</b> are related to its closeness to the primary vertex. </p>
                         <br/>
 
                         <h3>EXAMPLE 3: 99.88% Higgs Boson Signal</h3>
@@ -322,7 +326,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                        <p>If we draw our attention to the feature track_isMu, aka “is this particle a muon”, we'd see that track 19 is indeed a muon. As that super blue square indicates, the muon track is extremely important information when it comes to the model’s classification. This is great because it reflects real physics phenomena: muons are actually relatively common outputs of b hadron decay. And if b hadrons are decaying, there’s a good chance those b hadrons were descended from a Higgs boson signal. It’s promising that our model has gleaned the importance of the muon, and shows that the HIN is able to learn physics rules from the chaotic collision events to simplify the prediction, and that LRP is able to illuminate the HIN’s understanding in this manner.
+                        <p>If we draw our attention to the feature <b>track_isMu</b>, aka “is this particle a muon”, we'd see that track 19 is indeed a muon. As that super blue square indicates, the muon track is extremely important information when it comes to the model’s classification. This is great because it reflects real physics phenomena: muons are actually relatively common outputs of b hadron decay. And if b hadrons are decaying, there’s a good chance those b hadrons were descended from a Higgs boson signal. It’s promising that our model has gleaned the importance of the muon, and shows that the HIN is able to learn physics rules from the chaotic collision events to simplify the prediction, and that LRP is able to illuminate the HIN’s understanding in this manner.
                         </p>
                         <br/>
 
@@ -347,8 +351,8 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                        <p>In track 19, a lot of the cells are highly activated, which indicates that the model utilized a host of positional information like momentum from feature `track_pt`, angle from the jet axis from `track_deltaR`, `track_etarel`, and angle from the secondary vertex `track_drminsv`. More importantly, the cell corresponding to the boolean feature `track_puppiw` at the bottom is also highlighted in red. Alongside this positional information in track 19 is the boolean for feature track_puppiw, which indicates whether the track is "pileup-like", or more colloquially, an intrusive track from a separate jet decay. This indicates that our model understands that all that other positional information is only helpful given that this track is actually native to this jet. </p>
-                        <p>The other important cell is the bright red cell in track 18 under track_isEl, or "track is electron".
+                        <p>In track 19, a lot of the cells are highly activated, which indicates that the model utilized a host of positional information like momentum from feature <b>track_pt</b>, angle from the jet axis from <b>track_deltaR</b>, <b>track_etarel</b>, and angle from the secondary vertex <b>track_drminsv</b>. More importantly, the cell corresponding to the boolean feature <b>track_puppiw</b> at the bottom is also highlighted in red. Alongside this positional information in track 19 is the boolean for feature <b>track_puppiw</b>, which indicates whether the track is "pileup-like", or more colloquially, an intrusive track from a separate jet decay. This indicates that our model understands that all that other positional information is only helpful given that this track is actually native to this jet. </p>
+                        <p>The other important cell is the bright red cell in track 18 under <b>track_isEl</b>, or "track is electron".
                             Electrons are leptons, like muons, and also emerge in the decay of b hadrons at a significant rate. So, this particle feature, together with all the other information from track 19, is a strong indicator of the jet being related to a Higgs boson when present. 
                         </p>
 
