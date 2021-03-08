@@ -21,3 +21,13 @@
     flex: 50%;
     padding: 0;
   }
+
+figcaption {
+    display: block;
+    font-size: smaller;
+    text-align: center;
+  }
+
+  cite {
+      font-size: x-small;
+  }
