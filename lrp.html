@@ -123,6 +123,20 @@
                     Now that we have the fraction of contribution, we can substitute it back into the equation to get the basic distribution rule of LRP, known as the LRP-0 rule.
                 </p>
                 <p>In our project, we used a slightly more complicated distribution rule, the LRP-epsilon rule, for a better performance. </p>
+                <h3>An extension: Edge Significance score</h3>
+                <p> Recall from the 3D network plots, we defined a new variable edge significance in order to measure how important each edge is to the prediction. It can be considered as a variant derived from the relevance score. 
+                </p>
+                <p>The edges in the jet graphs are meant for the model to learn how each particle might have interacted with each other. They are not an actual part of the input but pathways that allow information to flow between the nodes. So if we consider each graph as a city and the edges are the roads that connect to each other. Then intuitively the importance of each edge is decided by how busy it is, or the traffic throughput of it.
+                </p>
+                <img src="img/traffic.jpg" width=70% class='img-fluid center'/>
+                <p>Following this idea, we defined the measurement edge significance to measure the importance of the edge by the amount of information, or contribution, flow through it in the decision making process.</p>
+                <p>For an edge connecting from track t<sub>i</sub> to track t<sub>j</sub>, call it e<sub>ij</sub>. Since each edge is defined by their source and destination nodes, 
+                the edge relevance of this edge is given by its source node and destination node, that is, it has 48 source node features and 48 destination node features.  
+                </p>
+                <img src="img/eq6.png" width=auto height=40pt class='img-fluid center'/>
+                <p>The edge significance S<sub>ij</sub> is a positive scalar value, given by the frobenius norm of the edge relevance score normalized with respect to all the edges in the graph
+                </p>
+                <img src="img/eq7.png" width=auto height=60pt class='img-fluid center'/>
             </div>
         </div>
     </div>
