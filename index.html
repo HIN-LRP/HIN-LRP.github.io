@@ -209,7 +209,7 @@
                     
                     <p>Look at this diagram. Follow the color density from the output as it moves backwards through the nodes. The more “relevant” nodes get more weight, and therefore color. For our model, this will allow us to highlight relevancy for both nodes, and edges.</p>
                     <img src="img/eq5.png" width=90% class='img-fluid center'/>
-                    <p> Now for the equation we’re using to propagate relevance: The LRP-epsilon rule. The complicated math equation defined above is used at each layer to propagate relevance through the model. The rule is derived from the gradient times input concept, with the addition of one more element: The epsilon refers to a small quantity added to the denominator. With this, we avoid numerical instabilities, and also absorb some of the relevance score such that only the most important features are highlighted.</p>
+                    <p> Now for the equation we’re using to propagate relevance: The LRP-ε rule. The complicated math equation defined above is used at each layer to propagate relevance through the model. The rule is derived from the gradient times input concept, with the addition of one more element: The ε refers to a small quantity added to the denominator. With this, we avoid numerical instabilities, and also absorb some of the relevance score such that only the most important features are highlighted.</p>
 
                     <p>
                         For the more mathematically inclined, see the <a href="lrp.html">LRP page</a> for more a more in depth breakdown.
