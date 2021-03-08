@@ -97,16 +97,26 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p>
+                        <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">ABSTRACT</a>
+                      </p>
+                      <div class="row" style="padding-left: 15px;">
+                          <div class="collapse multi-collapse" id="multiCollapseExample1">
+                            <div class="card">
+                                While graph interaction networks achieve exceptional results in Higgs boson identification, GNN explainer methodology is still in its infancy. To introduce GNN interpretation to the particle physics domain, we apply layerwise relevance propagation (LRP) to our existing Higgs boson interaction network (HIN) to calculate relevance scores and reveal what features, nodes, and connections are most influential in prediction. We call this application HIN-LRP. The synergy between the LRP interpretation and the inherent structure of the HIN is such that HIN-LRP is able to illuminate which particles and particle features in a given jet are most significant in Higgs boson identification. The resulting interpretations are ultimately congruent with extant particle physics theory, with the model demonstrably learning the importance of concepts like the presence of muons, characteristics of secondary decay, and salient features such as impact parameter and momentum.
+                            </div>
+                        </div>
+                      </div>
                     <h3 >ABSTRACT </h3>
                     
-                        <p>While graph interaction networks achieve exceptional results in Higgs boson identification, GNN explainer methodology is still in its infancy. To introduce GNN interpretation to the particle physics domain, we apply layerwise relevance propagation (LRP) to our existing Higgs boson interaction network (HIN) to calculate relevance scores and reveal what features, nodes, and connections are most influential in prediction. We call this application HIN-LRP. The synergy between the LRP interpretation and the inherent structure of the HIN is such that HIN-LRP is able to illuminate which particles and particle features in a given jet are most significant in Higgs boson identification. The resulting interpretations are ultimately congruent with extant particle physics theory, with the model demonstrably learning the importance of concepts like the presence of muons, characteristics of secondary decay, and salient features such as impact parameter and momentum.</p>
+                        <p></p>
                     <h2 class="section-heading">Intro</h2>
 
                     <p>Graph neural networks (GNN) are notoriously difficult to interpret, and those employed in the particle physics domain are no different. The graph interaction network has gained popularity with high energy physicists studying fundamental particles because this graph model achieves a highly competitive accuracy, while still working with relatively simple and unprocessed data. However, it is often not fully understood how or why the graph interaction networks make their classifications. Layerwise Relevance Propagation is a method we use to investigate how these models' inner workings might relate to the physical properties of the universe.</p>
 
                     <!-- <h3>the collider and the boson</h2> -->
 
-                    <p>The Higgs boson is a particle that was hypothesized in 1964 by Peter Higgs, and essentially suggested to represent a universal field that is essentially responsible for mass. Big Deal, right? But it took decades before it was actually confirmed. Evidence finally appeared in 2012, at the large hadron collider, where scientists slam particles together really really fast to make other particles, rare and important particles like the higgs boson. But even with the particle collider constantly firing, a higgs event is hard to come by. Not only that, these detectors don’t get to pick up a literal higgs boson, because it exists for only a brief moment in time before decaying. The detector has to look at the decays, which come in the form of particle jets, which is, fittingly, the form of our data.</p>
+                    <p>The Higgs boson is a particle that was hypothesized in 1964 by Peter Higgs, and essentially suggested to represent a universal field that is essentially responsible for mass. Big Deal, right? But it took decades before it was actually confirmed. Evidence finally appeared in 2012, at the Large Hadron Collider (LHC), where scientists slam particles together really really fast to make other particles, rare and important particles like the higgs boson. But even with the particle collider constantly firing, a higgs event is hard to come by. Not only that, these detectors don’t get to pick up a literal higgs boson, because it exists for only a brief moment in time before decaying. The detector has to look at the decays, which come in the form of particle jets, which is, fittingly, the form of our data.</p>
 
                     <h2 class="section-heading">Particle Jet Data</h2>
                     <p>Context on these "jets", and our data. When a spray of particles hit the detector, the particle flight pathways and measurements are reconstructed into what are called tracks, and then grouped under cone-like clusters. But for the purposes of the model, it's good to know that we actually train on simulation data. Why? Because in quantum physics, we can only predict things probabilistically, so there is no way to confidently label real LHC data. We can say “oh, this was probably a Higgs boson,” but there’s no way of really fully knowing.</p>
@@ -194,6 +204,10 @@
                     <p>Look at this diagram. Follow the color density from the output as it moves backwards through the nodes. The more “relevant” nodes get more weight, and therefore color. For our model, this will allow us to highlight relevancy for both nodes, and edges.</p>
                     <img src="img/eq5.png" width=90% class='img-fluid center'/>
                     <p> Now for the equation we’re using to propagate relevance: The LRP-epsilon rule. The complicated math equation defined above is used at each layer to propagate relevance through the model. The rule is derived from the gradient times input concept, with the addition of one more element: The epsilon refers to a small quantity added to the denominator. With this, we avoid numerical instabilities, and also absorb some of the relevance score such that only the most important features are highlighted.</p>
+
+                    <p>
+                        For the more mathematically inclined, see the <a href="lrp.html">LRP page</a> for more a more in depth breakdown
+                    </p>
                     
                     <h3>Dummy Model</h3>
 
